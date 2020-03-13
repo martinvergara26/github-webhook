@@ -12,7 +12,7 @@ app.use(function (req, res, next) {
 });
 
 const configuration = {
-  port: 9999
+  port: 8000
 }
 
 app.listen(configuration.port, () => console.log(`App listening on port ${configuration.port}`));
