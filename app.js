@@ -15,7 +15,6 @@ function getSignature(buf) {
 function verifyRequest(req, res, buf, encoding) {
   var expected = req.headers['x-hub-signature'];
   var calculated = getSignature(buf);
-  console.log("X-Hub-Signature:", expected, "Content:", "-" + buf.toString('utf8') + "-");
   if (expected !== calculated) {
     throw new Error("Invalid signature.");
   } else {
@@ -50,7 +49,7 @@ app.use(function (req, res, next) {
   console.log("event", event);
   console.log("branch", branch);
 
-  if(event === "push"){
+  if(event === "push" && branch === "refs/heads/master"){
     const deployProcess = exec('sh deploy.sh');
 
     deployProcess.stdout.on('data', function(data) {
