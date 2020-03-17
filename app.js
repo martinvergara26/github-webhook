@@ -1,5 +1,5 @@
 const GITHUB_WEBHOOK_SECRET = 'martin';
-const scriptAbsolutePath = '';
+const scriptAbsolutePath = '/home/ec2-user/Grundoon-CoreProcessing/init.sh deploy';
 
 const expressConf = {
   port: 9999
@@ -57,7 +57,11 @@ app.use(function (req, res, next) {
   console.log("branch", branch);
 
   if(event === "push" && branch === "refs/heads/master"){
-    const deployProcess = exec('sh ' + scriptAbsolutePath);
+    console.log("Pushed to master");
+
+    const command = 'sh ' + scriptAbsolutePath;
+    console.log("Executing command:", command);
+    const deployProcess = exec(command);
 
     deployProcess.stdout.on('data', function(data) {
       console.log(data);
