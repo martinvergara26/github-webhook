@@ -1,6 +1,10 @@
 const GITHUB_WEBHOOK_SECRET = 'martin';
 const scriptAbsolutePath = '';
 
+const expressConf = {
+  port: 9999
+};
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const exec = require('child_process').exec;
@@ -63,8 +67,4 @@ app.use(function (req, res, next) {
   res.sendStatus(200);
 });
 
-const configuration = {
-  port: 8000
-};
-
-app.listen(configuration.port, () => console.log(`App listening on port ${configuration.port}`));
+app.listen(expressConf.port, () => console.log(`App listening on port ${expressConf.port}`));
