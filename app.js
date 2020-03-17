@@ -1,3 +1,6 @@
+const GITHUB_WEBHOOK_SECRET = 'martin';
+const scriptAbsolutePath = '';
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const exec = require('child_process').exec;
@@ -5,7 +8,7 @@ const crypto = require('crypto')
 
 // Calculate the X-Hub-Signature header value.
 function getSignature(buf) {
-  const hmac = crypto.createHmac("sha1", "martin");
+  const hmac = crypto.createHmac("sha1", GITHUB_WEBHOOK_SECRET);
   hmac.update(buf, "utf-8");
   return "sha1=" + hmac.digest("hex");
 }
@@ -50,7 +53,7 @@ app.use(function (req, res, next) {
   console.log("branch", branch);
 
   if(event === "push" && branch === "refs/heads/master"){
-    const deployProcess = exec('sh deploy.sh');
+    const deployProcess = exec('sh ' + scriptAbsolutePath);
 
     deployProcess.stdout.on('data', function(data) {
       console.log(data);
