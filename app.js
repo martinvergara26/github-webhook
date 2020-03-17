@@ -54,7 +54,9 @@ app.use(abortOnError);
 function runCommand() {
   const options = {cwd: cwd};
   const cb = (error) => {
-    console.log("Error ", error);
+    if(error){
+      console.log("Error ", error);
+    }
   };
 
   console.log("Executing command:", command);
