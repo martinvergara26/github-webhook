@@ -1,5 +1,7 @@
-const GITHUB_WEBHOOK_SECRET = 'martin';
-const scriptAbsolutePath = '/home/ec2-user/Grundoon-CoreProcessing/init.sh deploy';
+const GITHUB_WEBHOOK_SECRET = process.env.GB_WEBHOOK_SECRET || 'martin';
+
+const cwd = process.env.DEPLOY_PATH || '/home/ec2-user/Grundoon-CoreProcessing';
+const command = process.env.DEPLOY_COMMAND || 'sh init.sh deploy';
 
 const expressConf = {
   port: 9999
@@ -49,6 +51,20 @@ app.use(bodyParser.json({ verify: verifyRequest }))
 // to prevent returning sensitive information.
 app.use(abortOnError);
 
+function runCommand() {
+  const options = {cwd: cwd};
+  const cb = (error) => {
+    console.log("Error ", error);
+  };
+
+  console.log("Executing command:", command);
+  const deployProcess = exec(command, options, cb);
+
+  deployProcess.stdout.on('data', function (data) {
+    console.log(data);
+  });
+}
+
 app.use(function (req, res, next) {
   const event = req.get("x-github-event");
   const branch = req.body.ref;
@@ -59,13 +75,7 @@ app.use(function (req, res, next) {
   if(event === "push" && branch === "refs/heads/master"){
     console.log("Pushed to master");
 
-    const command = 'sh ' + scriptAbsolutePath;
-    console.log("Executing command:", command);
-    const deployProcess = exec(command);
-
-    deployProcess.stdout.on('data', function(data) {
-      console.log(data);
-    });
+    runCommand();
   }
 
   res.sendStatus(200);
