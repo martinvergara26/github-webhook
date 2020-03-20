@@ -1,7 +1,7 @@
-const GITHUB_WEBHOOK_SECRET = process.env.GB_WEBHOOK_SECRET || 'martin';
+const GITHUB_WEBHOOK_SECRET = process.env.GB_WEBHOOK_SECRET;
 
-const cwd = process.env.DEPLOY_PATH || '/app/Grundoon-CoreProcessing';
-const command = process.env.DEPLOY_COMMAND || 'sh init.sh deploy';
+const cwd = process.env.DEPLOY_PATH;
+const command = process.env.DEPLOY_COMMAND;
 
 const expressConf = {
   port: 9999
@@ -82,8 +82,5 @@ app.use(function (req, res, next) {
 
   res.sendStatus(200);
 });
-
-runCommand()
-return
 
 app.listen(expressConf.port, () => console.log(`App listening on port ${expressConf.port}`));
