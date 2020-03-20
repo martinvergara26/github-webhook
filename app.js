@@ -1,8 +1,3 @@
-const GITHUB_WEBHOOK_SECRET = process.env.GB_WEBHOOK_SECRET;
-
-const cwd = process.env.DEPLOY_PATH;
-const command = process.env.DEPLOY_COMMAND;
-
 const expressConf = {
   port: 9999
 };
@@ -14,7 +9,7 @@ const crypto = require('crypto')
 
 // Calculate the X-Hub-Signature header value.
 function getSignature(buf) {
-  const hmac = crypto.createHmac("sha1", GITHUB_WEBHOOK_SECRET);
+  const hmac = crypto.createHmac("sha1", process.env.GB_WEBHOOK_SECRET);
   hmac.update(buf, "utf-8");
   return "sha1=" + hmac.digest("hex");
 }
@@ -52,13 +47,14 @@ app.use(bodyParser.json({ verify: verifyRequest }))
 app.use(abortOnError);
 
 function runCommand() {
-  const options = {cwd: cwd};
+  const options = {cwd: process.env.DEPLOY_PATH};
   const cb = (error) => {
     if(error){
       console.log("Error ", error);
     }
   };
 
+  const command = process.env.DEPLOY_COMMAND;
   console.log("Executing command:", command);
   const deployProcess = exec(command, options, cb);
 
