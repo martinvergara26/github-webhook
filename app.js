@@ -61,6 +61,10 @@ function runCommand() {
   deployProcess.stdout.on('data', function (data) {
     console.log(data);
   });
+
+  deployProcess.stderr.on('data', (data) => {
+    console.error(data);
+  });
 }
 
 app.use(function (req, res, next) {
