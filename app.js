@@ -6,6 +6,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const exec = require('child_process').exec;
 const crypto = require('crypto')
+const fs = require('fs');
 
 // Calculate the X-Hub-Signature header value.
 function getSignature(buf) {
@@ -82,5 +83,12 @@ app.use(function (req, res, next) {
 
   res.sendStatus(200);
 });
+
+try {
+  console.log(`PID: ${process.pid}`);
+  fs.writeFileSync('app_pid.txt', process.pid);
+} catch(err) {
+  console.error(err);
+}
 
 app.listen(expressConf.port, () => console.log(`App listening on port ${expressConf.port}`));

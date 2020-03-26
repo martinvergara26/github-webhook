@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm install && node app"
+    "start": "(npm install && node app) > stdout.txt 2> stderr.txt &",
+    "stop": "node stop"
   },
   "dependencies": {
     "express": "4.17.1"

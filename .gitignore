@@ -1,2 +1,6 @@
 node_modules/
 .idea/
+
+stderr.txt
+stdout.txt
+app_pid.txt
