@@ -87,7 +87,8 @@ app.use(function (req, res, next) {
   console.log("event", event);
   console.log("branch", branch);
 
-  if(event === "push" && branch === "refs/heads/master"){
+  if((event === "push" || event === "Push Hook")
+    && branch === "refs/heads/master"){
     console.log("Pushed to master");
 
     runCommand();
