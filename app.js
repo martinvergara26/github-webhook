@@ -21,17 +21,21 @@ function getSignature(buf) {
 // Verify function compatible with body-parser to retrieve the request payload.
 // Read more: https://github.com/expressjs/body-parser#verify
 function verifyRequest(req, res, buf, encoding) {
+  let valid = false;
+
   const gitlabToken = req.get('x-gitlab-token');
-  if(gitlabToken && gitlabToken !== process.env.GITLAB_SECRET_TOKEN){
-    throw new Error("Invalid signature.");
+  if(gitlabToken){
+    valid = gitlabToken === process.env.GITLAB_SECRET_TOKEN;
+  } else {
+    const given = req.get('x-hub-signature');
+    const expected = getSignature(buf);
+    valid = given === expected
   }
 
-  const given = req.get('x-hub-signature');
-  const expected = getSignature(buf);
-  if (given !== expected) {
-    throw new Error("Invalid signature.");
-  } else {
+  if (valid) {
     console.log("Valid signature!");
+  } else {
+    throw new Error("Invalid signature.");
   }
 }
 
