@@ -1,7 +1,7 @@
 {
-  "name": "git-webhook-server",
+  "name": "git-webhook-listener",
   "version": "0.0.1",
-  "description": "Server to automatically run commands on Github or Gitlab events",
+  "description": "Server that listens Github or Gitlab events, to automatically run custom commands.",
   "main": "index.js",
   "scripts": {
     "start": "(npm install && node app) > stdout.txt 2> stderr.txt &",
