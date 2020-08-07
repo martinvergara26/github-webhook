@@ -1,5 +1,5 @@
 {
-  "name": "git-webhook-listener",
+  "name": "git-events-listener",
   "version": "0.0.1",
   "description": "Server that listens Github or Gitlab events, to automatically run custom commands.",
   "main": "index.js",
