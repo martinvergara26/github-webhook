@@ -50,14 +50,14 @@ function abortOnError(err, req, res, next) {
   }
 }
 
-const app = express();
+const index = express();
 
 // body-parser is the first Express middleware.
-app.use(bodyParser.json({ verify: verifyRequest }))
+index.use(bodyParser.json({ verify: verifyRequest }))
 
 // Add an error-handling Express middleware function
 // to prevent returning sensitive information.
-app.use(abortOnError);
+index.use(abortOnError);
 
 function runCommand() {
   const options = {cwd: process.env.DEPLOY_PATH};
@@ -80,7 +80,7 @@ function runCommand() {
   });
 }
 
-app.use(function (req, res, next) {
+index.use(function (req, res, next) {
   const event = req.get("x-github-event") || req.get('X-Gitlab-Event');
   const branch = req.body.ref;
 
@@ -104,4 +104,4 @@ try {
   console.error(err);
 }
 
-app.listen(expressConf.port, () => console.log(`App listening on port ${expressConf.port}`));
+index.listen(expressConf.port, () => console.log(`App listening on port ${expressConf.port}`));

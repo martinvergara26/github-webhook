@@ -1,10 +1,11 @@
 {
   "name": "git-events-listener",
-  "version": "0.0.1",
+  "keywords": ["git", "webhook", "server", "ci", "devops", "github", "gitlab"],
+  "version": "0.0.2",
   "description": "Server that listens Github or Gitlab events, to automatically run custom commands.",
   "main": "index.js",
   "scripts": {
-    "start": "(npm install && node app) > stdout.txt 2> stderr.txt &",
+    "start": "(npm install && node index) > stdout.txt 2> stderr.txt &",
     "stop": "node stop"
   },
   "dependencies": {
