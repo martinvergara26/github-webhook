@@ -1,7 +1,7 @@
 {
   "name": "git-webhook-server",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "Server to automatically run commands on Github or Gitlab events",
   "main": "index.js",
   "scripts": {
     "start": "(npm install && node app) > stdout.txt 2> stderr.txt &",
@@ -11,6 +11,6 @@
     "dotenv": "^8.2.0",
     "express": "4.17.1"
   },
-  "author": "",
+  "author": "Martín Vergara",
   "license": "ISC"
 }
